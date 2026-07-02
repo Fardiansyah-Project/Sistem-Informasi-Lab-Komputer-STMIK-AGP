@@ -17,7 +17,7 @@ git clone https://github.com/Fardiansyah-Project/Sistem-Informasi-Lab-Komputer-S
 Masuk ke folder project:
 
 ```bash
-cd nama-project
+cd Sistem-Informasi-Lab-Komputer-STMIK-AGP
 ```
 
 ---
