@@ -11,7 +11,7 @@ git clone https://github.com/nama-user/nama-project.git
 Contoh:
 
 ```bash
-git clone https://github.com/username/project-laravel.git
+git clone https://github.com/Fardiansyah-Project/Sistem-Informasi-Lab-Komputer-STMIK-AGP.git
 ```
 
 Masuk ke folder project:
