@@ -12,6 +12,7 @@ class Proposal extends Model
         'nomor_surat',
         'lampiran',
         'perihal',
+        'tujuan_surat',
         'tanggal_surat',
         'user_id',
     ];

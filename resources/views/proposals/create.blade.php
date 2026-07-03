@@ -54,17 +54,25 @@
                     </div>
                 </div>
 
-                <div>
-                    <label for="user_id" class="block text-sm font-medium text-slate-700 mb-1.5">Pembuat Surat</label>
-                    <select name="user_id" id="user_id" required
-                            class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 transition-all">
-                        <option value="">Pilih Pembuat</option>
-                        @foreach($users as $user)
-                            <option value="{{ $user->id }}" {{ old('user_id') == $user->id ? 'selected' : '' }}>
-                                {{ $user->name }} {{ $user->nidn ? '(' . $user->nidn . ')' : '' }}
-                            </option>
-                        @endforeach
-                    </select>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div>
+                        <label for="tujuan_surat" class="block text-sm font-medium text-slate-700 mb-1.5">Tujuan Surat (Kepada Yth.)</label>
+                        <input type="text" name="tujuan_surat" id="tujuan_surat" value="{{ old('tujuan_surat', 'Ketua STMIK Adhi Guna') }}" required
+                               placeholder="Ketua STMIK Adhi Guna"
+                               class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 transition-all">
+                    </div>
+                    <div>
+                        <label for="user_id" class="block text-sm font-medium text-slate-700 mb-1.5">Pembuat Surat</label>
+                        <select name="user_id" id="user_id" required
+                                class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 transition-all">
+                            <option value="">Pilih Pembuat</option>
+                            @foreach($users as $user)
+                                <option value="{{ $user->id }}" {{ old('user_id') == $user->id ? 'selected' : '' }}>
+                                    {{ $user->name }} {{ $user->nidn ? '(' . $user->nidn . ')' : '' }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>

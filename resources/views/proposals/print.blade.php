@@ -166,7 +166,7 @@
         {{-- Greeting --}}
         <div class="greeting">
             <p>Kepada Yth,</p>
-            <p><strong>Ketua STMIK Adhi Guna</strong></p>
+            <p><strong>{{ $proposal->tujuan_surat }}</strong></p>
             <p>di Tempat</p>
         </div>
 

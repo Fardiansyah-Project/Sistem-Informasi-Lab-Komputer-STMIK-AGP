@@ -7,6 +7,7 @@ use App\Models\DetailProposal;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ProposalController extends Controller
 {
@@ -32,6 +33,7 @@ class ProposalController extends Controller
             'nomor_surat' => 'required|string|max:255',
             'lampiran' => 'required|string|max:255',
             'perihal' => 'required|string|max:255',
+            'tujuan_surat' => 'required|string|max:255',
             'tanggal_surat' => 'required|date',
             'user_id' => 'required|exists:users,id',
             'details' => 'required|array|min:1',
@@ -45,6 +47,7 @@ class ProposalController extends Controller
             'nomor_surat' => $validated['nomor_surat'],
             'lampiran' => $validated['lampiran'],
             'perihal' => $validated['perihal'],
+            'tujuan_surat' => $validated['tujuan_surat'],
             'tanggal_surat' => $validated['tanggal_surat'],
             'user_id' => $validated['user_id'],
         ]);
@@ -84,5 +87,22 @@ class ProposalController extends Controller
         $tanggalFormatted = $proposal->tanggal_surat->translatedFormat('d F Y');
 
         return view('proposals.print', compact('proposal', 'tanggalFormatted'));
+    }
+
+    /**
+     * Ekspor surat permohonan pengadaan barang ke PDF.
+     */
+    public function exportPdf(Proposal $proposal)
+    {
+        $proposal->load(['user', 'details']);
+
+        Carbon::setLocale('id');
+        $tanggalFormatted = $proposal->tanggal_surat->translatedFormat('d F Y');
+
+        $pdf = Pdf::loadView('proposals.pdf', compact('proposal', 'tanggalFormatted'))->setPaper('a4', 'portrait');
+
+        // Return download
+        $filename = 'Surat_Pengajuan_' . str_replace('/', '_', $proposal->nomor_surat) . '.pdf';
+        return $pdf->download($filename);
     }
 }
