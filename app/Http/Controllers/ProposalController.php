@@ -22,7 +22,7 @@ class ProposalController extends Controller
 
     public function create()
     {
-        $users = User::all();
+        $users = User::where('role', 'Kepala UPT Lab')->get();
 
         return view('proposals.create', compact('users'));
     }

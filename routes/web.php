@@ -6,6 +6,7 @@ use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\LaboratoryController;
 use App\Http\Controllers\ProposalController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\UserController;
 
 // Dashboard
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
@@ -13,6 +14,7 @@ Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 // Resource Routes
 Route::resource('inventories', InventoryController::class);
 Route::resource('laboratories', LaboratoryController::class);
+Route::resource('users', UserController::class);
 Route::resource('proposals', ProposalController::class)->except(['edit', 'update']);
 
 // Cetak Surat Pengajuan
