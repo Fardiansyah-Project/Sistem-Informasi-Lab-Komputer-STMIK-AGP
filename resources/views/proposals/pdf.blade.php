@@ -164,6 +164,22 @@
         .signature-wrap .nidn {
             margin-top: 2px;
         }
+
+        .tembusan-block {
+            padding: 12px 0px;
+            font-size: 10pt;
+        }
+
+        .tembusan-block .title {
+            font-weight: bold;
+            margin-bottom: 6px;
+            text-align: left;
+        }
+
+        .list-decimal {
+            list-style-type: decimal;
+            padding-left: 20px;
+        }
     </style>
 </head>
 
@@ -171,15 +187,15 @@
     {{-- Kop Surat --}}
     <div class="kop-surat">
         @php
-        $kopPath = public_path('img/kop_surat.jpg');
-        $kopBase64 = '';
-        if (file_exists($kopPath)) {
-        $kopData = base64_encode(file_get_contents($kopPath));
-        $kopBase64 = 'data:image/jpeg;base64,' . $kopData;
-        }
+            $kopPath = public_path('img/kop_surat.jpg');
+            $kopBase64 = '';
+            if (file_exists($kopPath)) {
+                $kopData = base64_encode(file_get_contents($kopPath));
+                $kopBase64 = 'data:image/jpeg;base64,' . $kopData;
+            }
         @endphp
-        @if($kopBase64)
-        <img src="{{ $kopBase64 }}" alt="Kop Surat STMIK Adhi Guna">
+        @if ($kopBase64)
+            <img src="{{ $kopBase64 }}" alt="Kop Surat STMIK Adhi Guna">
         @endif
     </div>
 
@@ -217,7 +233,8 @@
     <div class="body-text">
         <p>Dengan hormat,</p>
         <p style="text-indent: 40px;">
-            Sehubungan dengan kebutuhan operasional UPT Laboratorium Komputer STMIK Adhi Guna, dengan ini kami mengajukan permohonan pengadaan barang sebagai berikut:
+            Sehubungan dengan kebutuhan operasional UPT Laboratorium Komputer STMIK Adhi Guna, dengan ini kami
+            mengajukan permohonan pengadaan barang sebagai berikut:
         </p>
     </div>
 
@@ -232,20 +249,21 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($proposal->details as $index => $detail)
-            <tr>
-                <td class="center">{{ $index + 1 }}</td>
-                <td>{{ $detail->nama_barang }}</td>
-                <td class="center">{{ $detail->jumlah }}</td>
-                <td>{{ $detail->ruang_tujuan }}</td>
-            </tr>
+            @foreach ($proposal->details as $index => $detail)
+                <tr>
+                    <td class="center">{{ $index + 1 }}</td>
+                    <td>{{ $detail->nama_barang }}</td>
+                    <td class="center">{{ $detail->jumlah }}</td>
+                    <td>{{ $detail->ruang_tujuan }}</td>
+                </tr>
             @endforeach
         </tbody>
     </table>
 
     {{-- Closing text --}}
     <p class="closing-text" style="text-indent: 40px;">
-        Demikian surat permohonan ini kami sampaikan. Atas perhatian dan persetujuan Bapak/Ibu, kami ucapkan terima kasih.
+        Demikian surat permohonan ini kami sampaikan. Atas perhatian dan persetujuan Bapak/Ibu, kami ucapkan terima
+        kasih.
     </p>
 
     {{-- Signature block --}}
@@ -257,10 +275,27 @@
                 <p>Kepala UPT Lab. Komputer</p>
                 <div class="sign-space"></div>
                 <p class="name">{{ $proposal->user->name ?? '_______________' }}</p>
-                @if($proposal->user && $proposal->user->nidn)
-                <p class="nidn">NIDN. {{ $proposal->user->nidn }}</p>
+                @if ($proposal->user && $proposal->user->nidn)
+                    <p class="nidn">NIDN. {{ $proposal->user->nidn }}</p>
                 @endif
             </td>
+        </tr>
+        <tr>
+            <td class="spacer-col">
+                <div class="tembusan-block">
+                    <p class="title">Tembusan:</p>
+                    @if ($proposal->tembusans && $proposal->tembusans->count() > 0)
+                        <ol class="list-decimal list-inside">
+                            @foreach ($proposal->tembusans as $tembusan)
+                                <li>{{ $tembusan->tembusan }}</li>
+                            @endforeach
+                        </ol>
+                    @else
+                        <p>-</p>
+                    @endif
+                </div>
+            </td>
+            <td class="sign-col">&nbsp;</td>
         </tr>
     </table>
 </body>

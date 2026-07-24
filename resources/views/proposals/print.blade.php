@@ -28,7 +28,7 @@
             width: 210mm;
             min-height: 297mm;
             margin: 20px auto;
-            padding: 20mm 25mm 20mm 30mm;
+            padding: 30px 50px 30px 50px;
             background: #fff;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
@@ -79,9 +79,12 @@
 
         /* Body */
         .body-text {
-            margin-bottom: 16px;
+            margin-bottom: 18px;
             text-align: justify;
-            font-size: 11pt;
+        }
+
+        .body-text p {
+            margin-bottom: 8px;
         }
 
         /* Items Table */
@@ -115,7 +118,7 @@
             font-size: 11pt;
         }
 
-        .signature-block {
+        /* .signature-block {
             margin-top: 16px;
             float: right;
             text-align: center;
@@ -133,6 +136,59 @@
 
         .signature-block .nidn {
             font-size: 10pt;
+        } */
+
+        /* Signature block */
+        .signature-wrap {
+            width: 100%;
+            border-collapse: collapse;
+            page-break-inside: avoid;
+        }
+
+        .signature-wrap td {
+            vertical-align: top;
+            padding: 0;
+        }
+
+        .signature-wrap .spacer-col {
+            width: 55%;
+        }
+
+        .signature-wrap .sign-col {
+            width: 45%;
+            text-align: center;
+        }
+
+        .signature-wrap .sign-space {
+            height: 80px;
+        }
+
+        .signature-wrap .name {
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+        .signature-wrap .nidn {
+            margin-top: 2px;
+        }
+
+        .tembusan-block {
+            float: left;
+            width: 55%;
+            font-size: 10pt;
+            margin-top: 24px;
+            padding: 12px 0px;
+        }
+
+        .tembusan-block .title {
+            font-weight: bold;
+            margin-bottom: 6px;
+            text-align: left;
+        }
+
+        .list-decimal {
+            list-style-type: decimal;
+            padding-left: 20px;
         }
 
         .clearfix::after {
@@ -211,7 +267,8 @@
     <div class="action-bar">
         <button class="btn-print" onclick="window.print()">
             <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
             </svg>
             Cetak Surat
         </button>
@@ -263,7 +320,8 @@
         <div class="body-text">
             <p>Dengan hormat,</p>
             <p style="text-indent: 40px; margin-top: 8px;">
-                Sehubungan dengan kebutuhan operasional UPT Laboratorium Komputer STMIK Adhi Guna, dengan ini kami mengajukan permohonan pengadaan barang sebagai berikut:
+                Sehubungan dengan kebutuhan operasional UPT Laboratorium Komputer STMIK Adhi Guna, dengan ini kami
+                mengajukan permohonan pengadaan barang sebagai berikut:
             </p>
         </div>
 
@@ -279,34 +337,79 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($proposal->details as $index => $detail)
-                <tr>
-                    <td class="center">{{ $index + 1 }}</td>
-                    <td>{{ $detail->nama_barang }}</td>
-                    <td class="center">{{ $detail->jumlah }}</td>
-                    <td>{{ $detail->ruang_tujuan }}</td>
-                    <td>{{ $detail->keterangan ?? '-' }}</td>
-                </tr>
+                @foreach ($proposal->details as $index => $detail)
+                    <tr>
+                        <td class="center">{{ $index + 1 }}</td>
+                        <td>{{ $detail->nama_barang }}</td>
+                        <td class="center">{{ $detail->jumlah }}</td>
+                        <td>{{ $detail->ruang_tujuan }}</td>
+                        <td>{{ $detail->keterangan ?? '-' }}</td>
+                    </tr>
                 @endforeach
             </tbody>
         </table>
 
         {{-- Closing --}}
         <div class="body-text">
-            <p>Demikian surat permohonan ini kami sampaikan. Atas perhatian dan persetujuan Bapak/Ibu, kami ucapkan terima kasih.</p>
+            <p>Demikian surat permohonan ini kami sampaikan. Atas perhatian dan persetujuan Bapak/Ibu, kami ucapkan
+                terima kasih.</p>
         </div>
 
-        <div class="closing clearfix">
+        {{-- <div class="closing clearfix">
+            <div class="tembusan-block">
+                <p class="title">Tembusan:</p>
+                @if ($proposal->tembusans && $proposal->tembusans->count() > 0)
+                    <ol class="list-decimal list-inside">
+                        @foreach ($proposal->tembusans as $tembusan)
+                            <li>{{ $tembusan->tembusan }}</li>
+                        @endforeach
+                    </ol>
+                @else
+                    <p>-</p>
+                @endif
+            </div>
             <div class="signature-block">
                 <p>Palu, {{ $tanggalFormatted }}</p>
                 <p>Kepala UPT Lab. Komputer</p>
                 <div class="sign-space"></div>
                 <p class="name">{{ $proposal->user->name ?? '_______________' }}</p>
-                @if($proposal->user && $proposal->user->nidn)
-                <p class="nidn">NIDN. {{ $proposal->user->nidn }}</p>
+                @if ($proposal->user && $proposal->user->nidn)
+                    <p class="nidn">NIDN. {{ $proposal->user->nidn }}</p>
                 @endif
             </div>
-        </div>
+        </div> --}}
+        {{-- Signature block --}}
+        <table class="signature-wrap">
+            <tr>
+                <td class="spacer-col">&nbsp;</td>
+                <td class="sign-col">
+                    <p>Palu, {{ $tanggalFormatted }}</p>
+                    <p>Kepala UPT Lab. Komputer</p>
+                    <div class="sign-space"></div>
+                    <p class="name">{{ $proposal->user->name ?? '_______________' }}</p>
+                    @if ($proposal->user && $proposal->user->nidn)
+                        <p class="nidn">NIDN. {{ $proposal->user->nidn }}</p>
+                    @endif
+                </td>
+            </tr>
+            <tr>
+                <td class="spacer-col">
+                    <div class="tembusan-block">
+                        <p class="title">Tembusan:</p>
+                        @if ($proposal->tembusans && $proposal->tembusans->count() > 0)
+                            <ol class="list-decimal list-inside">
+                                @foreach ($proposal->tembusans as $tembusan)
+                                    <li>{{ $tembusan->tembusan }}</li>
+                                @endforeach
+                            </ol>
+                        @else
+                            <p>-</p>
+                        @endif
+                    </div>
+                </td>
+                <td class="sign-col">&nbsp;</td>
+            </tr>
+        </table>
     </div>
 </body>
 

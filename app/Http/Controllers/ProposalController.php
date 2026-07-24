@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Proposal;
 use App\Models\DetailProposal;
+use App\Models\DetailTembusan;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -13,7 +14,7 @@ class ProposalController extends Controller
 {
     public function index()
     {
-        $proposals = Proposal::with(['user', 'details'])
+        $proposals = Proposal::with(['user', 'details', 'tembusans'])
             ->latest()
             ->paginate(15);
 
@@ -41,6 +42,8 @@ class ProposalController extends Controller
             'details.*.jumlah' => 'required|integer|min:1',
             'details.*.ruang_tujuan' => 'required|string|max:255',
             'details.*.keterangan' => 'nullable|string|max:255',
+            'tembusans' => 'nullable|array',
+            'tembusans.*.tembusan' => 'nullable|string|max:255',
         ]);
 
         $proposal = Proposal::create([
@@ -51,6 +54,14 @@ class ProposalController extends Controller
             'tanggal_surat' => $validated['tanggal_surat'],
             'user_id' => $validated['user_id'],
         ]);
+
+        if (!empty($validated['tembusans'])) {
+            foreach ($validated['tembusans'] as $tembusan) {
+                if (!empty($tembusan['tembusan'])) {
+                    $proposal->tembusans()->create($tembusan);
+                }
+            }
+        }
 
         foreach ($validated['details'] as $detail) {
             $proposal->details()->create($detail);
