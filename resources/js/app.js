@@ -1,3 +1,5 @@
+import Alpine from 'alpinejs'
+
 // Sidebar Toggle and Mobile Handling
 document.addEventListener('DOMContentLoaded', () => {
     const sidebarToggle = document.getElementById('sidebar-toggle');
@@ -25,3 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 4000);
     }
 });
+
+window.Alpine = Alpine
+ 
+Alpine.start()

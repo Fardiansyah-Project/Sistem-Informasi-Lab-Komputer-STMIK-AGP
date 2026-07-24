@@ -8,7 +8,7 @@
     {{-- Header --}}
     <div>
         <h2 class="text-xl font-bold text-slate-900">Laporan Rekapitulasi Inventaris</h2>
-        <p class="text-sm text-slate-500 mt-0.5">Ringkasan kondisi barang di setiap laboratorium</p>
+        <p class="text-sm text-slate-500 mt-0.5">Ringkasan kondisi barang di setiap laboratorium periode {{ date('Y')}} / {{date('Y')+1}}</p>
     </div>
 
     {{-- Overview Cards --}}
