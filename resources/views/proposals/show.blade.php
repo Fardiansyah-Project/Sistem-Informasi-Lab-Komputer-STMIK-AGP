@@ -101,7 +101,8 @@
                                 <td class="px-6 py-3 text-sm font-medium text-slate-800">{{ $detail->nama_barang }}</td>
                                 <td class="px-6 py-3 text-sm text-slate-700 text-center font-semibold">
                                     {{ $detail->jumlah }}</td>
-                                <td class="px-6 py-3 text-sm text-slate-500">{{ $detail->ruang_tujuan }}</td>
+                                <td class="px-6 py-3 text-sm text-slate-500">{{ $detail->laboratory->nama_lab ?? '-' }}
+                                </td>
                                 <td class="px-6 py-3 text-sm text-slate-400">{{ $detail->keterangan ?? '-' }}</td>
                             </tr>
                         @endforeach

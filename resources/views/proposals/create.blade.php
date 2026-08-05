@@ -69,6 +69,21 @@
                                 class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 transition-all">
                         </div>
                         <div>
+                            <label for="user_id" class="block text-sm font-medium text-slate-700 mb-1.5">Pembuat
+                                Surat</label>
+                            <select name="user_id" id="user_id" required
+                                class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 transition-all">
+                                <option value="">Pilih Pembuat</option>
+                                @foreach ($users as $user)
+                                    <option value="{{ $user->id }}" {{ old('user_id') == $user->id ? 'selected' : '' }}>
+                                        {{ $user->name }} {{ $user->nidn ? '(' . $user->nidn . ')' : '' }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        <div>
                             <div class="flex items-center justify-between mb-1.5">
                                 <label class="block text-sm font-medium text-slate-700">Tembusan</label>
                                 <button type="button" id="add-tembusan-btn"
@@ -96,21 +111,6 @@
                                     </button>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                        <div>
-                            <label for="user_id" class="block text-sm font-medium text-slate-700 mb-1.5">Pembuat
-                                Surat</label>
-                            <select name="user_id" id="user_id" required
-                                class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 transition-all">
-                                <option value="">Pilih Pembuat</option>
-                                @foreach ($users as $user)
-                                    <option value="{{ $user->id }}" {{ old('user_id') == $user->id ? 'selected' : '' }}>
-                                        {{ $user->name }} {{ $user->nidn ? '(' . $user->nidn . ')' : '' }}
-                                    </option>
-                                @endforeach
-                            </select>
                         </div>
                     </div>
                 </div>
@@ -162,8 +162,18 @@
                             </div>
                             <div>
                                 <label class="block text-xs font-medium text-slate-600 mb-1">Ruang Tujuan</label>
-                                <input type="text" name="details[0][ruang_tujuan]" required placeholder="Lab Hardware"
-                                    class="w-full px-3.5 py-2 bg-white border border-slate-200 rounded-lg text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 transition-all">
+                                <select name="details[0][ruang_tujuan]" id="laboratorium_id" required
+                                    class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 transition-all">
+                                    <option value="">Pilih Laboratorium</option>
+                                    @foreach ($laboratories as $laboratory)
+                                        <option value="{{ $laboratory->id }}"
+                                            {{ old('details.0.ruang_tujuan') == $laboratory->id ? 'selected' : '' }}>
+                                            {{ $laboratory->nama_lab }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                {{-- <input type="text" name="details[0][ruang_tujuan]" required placeholder="Lab Hardware"
+                                    class="w-full px-3.5 py-2 bg-white border border-slate-200 rounded-lg text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 transition-all"> --}}
                             </div>
                             <div>
                                 <label class="block text-xs font-medium text-slate-600 mb-1">Keterangan</label>
@@ -223,8 +233,16 @@
                     </div>
                     <div>
                         <label class="block text-xs font-medium text-slate-600 mb-1">Ruang Tujuan</label>
-                        <input type="text" name="details[${itemIndex}][ruang_tujuan]" required placeholder="Lab Hardware"
-                               class="w-full px-3.5 py-2 bg-white border border-slate-200 rounded-lg text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 transition-all">
+                         <select name="details[${itemIndex}][ruang_tujuan]" required
+                                    class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 transition-all">
+                                    <option value="">Pilih Laboratorium</option>
+                                    @foreach ($laboratories as $laboratory)
+                                        <option value="{{ $laboratory->id }}"
+                                            {{ old('details.0.ruang_tujuan') == $laboratory->id ? 'selected' : '' }}>
+                                            {{ $laboratory->nama_lab }}
+                                        </option>
+                                    @endforeach
+                        </select>
                     </div>
                     <div>
                         <label class="block text-xs font-medium text-slate-600 mb-1">Keterangan</label>

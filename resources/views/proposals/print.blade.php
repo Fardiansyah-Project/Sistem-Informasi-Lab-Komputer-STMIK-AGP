@@ -313,6 +313,7 @@
         <div class="greeting">
             <p>Kepada Yth,</p>
             <p><strong>{{ $proposal->tujuan_surat }}</strong></p>
+            <p><strong>Cq. Wakil Ketua II Bidang Keuangan & Umum</strong></p>
             <p>di Tempat</p>
         </div>
 
@@ -342,8 +343,8 @@
                         <td class="center">{{ $index + 1 }}</td>
                         <td>{{ $detail->nama_barang }}</td>
                         <td class="center">{{ $detail->jumlah }}</td>
-                        <td>{{ $detail->ruang_tujuan }}</td>
-                        <td>{{ $detail->keterangan ?? '-' }}</td>
+                        <td class="center">{{ $detail->laboratory->nama_lab ?? '-' }}</td>
+                        <td class="center">{{ $detail->keterangan ?? '-' }}</td>
                     </tr>
                 @endforeach
             </tbody>
