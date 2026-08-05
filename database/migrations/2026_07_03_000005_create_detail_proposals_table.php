@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('proposal_id')->constrained('proposals')->cascadeOnDelete();
             $table->string('nama_barang');
             $table->integer('jumlah')->default(1);
-            $table->string('ruang_tujuan');
+            $table->string('ruang_tujuan')->constarained('laboratories')->cascadeOnDelete();
             $table->string('keterangan')->nullable();
             $table->timestamps();
         });

@@ -22,4 +22,9 @@ class DetailProposal extends Model
     {
         return $this->belongsTo(Proposal::class);
     }
+
+    public function laboratory(): BelongsTo
+    {
+        return $this->belongsTo(Laboratory::class, 'ruang_tujuan');
+    }
 }

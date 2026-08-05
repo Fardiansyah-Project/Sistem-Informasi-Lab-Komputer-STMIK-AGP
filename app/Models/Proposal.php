@@ -39,4 +39,9 @@ class Proposal extends Model
     {
         return $this->hasMany(DetailProposal::class);
     }
+
+    public function tembusans(): HasMany
+    {
+        return $this->hasMany(DetailTembusan::class);
+    }
 }

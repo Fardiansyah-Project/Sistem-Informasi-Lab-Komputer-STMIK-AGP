@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Proposal;
 use App\Models\DetailProposal;
+use App\Models\Laboratory;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -13,7 +14,7 @@ class ProposalController extends Controller
 {
     public function index()
     {
-        $proposals = Proposal::with(['user', 'details'])
+        $proposals = Proposal::with(['user', 'details', 'tembusans', 'details.laboratory'])
             ->latest()
             ->paginate(15);
 
@@ -23,8 +24,9 @@ class ProposalController extends Controller
     public function create()
     {
         $users = User::where('role', 'Kepala UPT Lab')->get();
+        $laboratories = Laboratory::all();
 
-        return view('proposals.create', compact('users'));
+        return view('proposals.create', compact('users', 'laboratories'));
     }
 
     public function store(Request $request)
@@ -41,6 +43,8 @@ class ProposalController extends Controller
             'details.*.jumlah' => 'required|integer|min:1',
             'details.*.ruang_tujuan' => 'required|string|max:255',
             'details.*.keterangan' => 'nullable|string|max:255',
+            'tembusans' => 'nullable|array',
+            'tembusans.*.tembusan' => 'nullable|string|max:255',
         ]);
 
         $proposal = Proposal::create([
@@ -52,6 +56,14 @@ class ProposalController extends Controller
             'user_id' => $validated['user_id'],
         ]);
 
+        if (!empty($validated['tembusans'])) {
+            foreach ($validated['tembusans'] as $tembusan) {
+                if (!empty($tembusan['tembusan'])) {
+                    $proposal->tembusans()->create($tembusan);
+                }
+            }
+        }
+
         foreach ($validated['details'] as $detail) {
             $proposal->details()->create($detail);
         }
@@ -62,7 +74,7 @@ class ProposalController extends Controller
 
     public function show(Proposal $proposal)
     {
-        $proposal->load(['user', 'details']);
+        $proposal->load(['user', 'details', 'tembusans', 'details.laboratory']);
 
         return view('proposals.show', compact('proposal'));
     }
@@ -80,7 +92,7 @@ class ProposalController extends Controller
      */
     public function print(Proposal $proposal)
     {
-        $proposal->load(['user', 'details']);
+        $proposal->load(['user', 'details', 'tembusans']);
 
         // Format tanggal Indonesia menggunakan Carbon
         Carbon::setLocale('id');
@@ -94,7 +106,7 @@ class ProposalController extends Controller
      */
     public function exportPdf(Proposal $proposal)
     {
-        $proposal->load(['user', 'details']);
+        $proposal->load(['user', 'details', 'tembusans']);
 
         Carbon::setLocale('id');
         $tanggalFormatted = $proposal->tanggal_surat->translatedFormat('d F Y');
