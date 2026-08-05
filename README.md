@@ -127,6 +127,22 @@ Gunakan perintah berikut:
 php artisan serve
 ```
 
+## 9. Menginstall Plugin NodeJs
+
+Gunakan perintah berikut:
+
+```bash
+npm install
+```
+
+## 10. Jalankan Project Server NodeJs
+
+Gunakan perintah berikut:
+
+```bash
+npm run dev
+```
+
 Buka browser lalu akses:
 
 ```text
@@ -140,6 +156,7 @@ http://localhost:8000
 Pastikan perangkat sudah terinstall:
 
 - PHP
+- NodeJs
 - Composer
 - MySQL / MariaDB
 - Git
